@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, FlatList} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import Matchups from '../components/Matchups';
 
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const date = new Date();
     const [dateToday, setDateToday] = useState("");
-    const [games, setGames] = useState([]);
+    const [matchups, setMatchups] = useState([]);
+
 
     function formatDate(date, format) {
         const map = {
@@ -23,30 +25,16 @@ const HomeScreen = () => {
         return today
     }
 
-    const test = async () => {
+    const getGames = async () => {
         try {
-            const response = await fetch("https://www.balldontlie.io/api/v1/games?start_date=2023-11-8&end_date=2023-11-8");
-            // const result = await response.json();
-            // console.log(result);
-            const result = await response.text();
-            setGames(result);
-            // return result;
+            const response = await fetch(`https://www.balldontlie.io/api/v1/games?start_date=${formatDate(date, "yy-mm-dd")}&end_date=2023-11-11`);
+            const result = await response.json();
+            return result;
+            game();
         } catch(error) {
             console.log("Error getting the games", error);
         }
     } 
-    
-    const statsTest = async () => {
-        try {
-            const response = await fetch("https://www.balldontlie.io/api/v1/stats?game_ids[]=1037671&per_page=40");
-            // const result = await response.json();
-            // console.log(result);
-            const result = await response.text();
-            return result;
-        } catch (error) {
-            console.log("Error getting stats", error)
-        }
-    }
     
     function formatDate(date, format) {
         const map = {
@@ -58,19 +46,64 @@ const HomeScreen = () => {
         return format.replace(/mm|dd|yy|yyy/gi, matched => map[matched])
     }
     
+    const game = async (games) => {
+        const teams = games
+
+        for (let i = 0; i < teams.data.length; i++) { 
+            let matchup = teams.data[i]
+            console.log(`game ${i}`, matchup);
+            setMatchups(matchups => 
+                [...matchups,
+                    { 
+                        id: matchup.id,
+                        time: matchup.time,
+                        home_team: {
+                            id: matchup.home_team.id,
+                            full_name: matchup.home_team.full_name,
+                            abbr: matchup.home_team.abbreviation,
+                            score: matchup.home_team_score
+                        },
+                        visitor_team: {
+                            id: matchup.visitor_team.id,
+                            full_name: matchup.visitor_team.full_name,
+                            abbr: matchup.visitor_team.abbreviation,
+                            score: matchup.visitor_team_score
+                        }
+                    }
+                ]
+            )
+
+          }
+    }
+
+    const please = () => {
+        console.log("matchups", matchups);
+    }
+
+
     useEffect(() => {
-        test()
-        console.log(games)
+
+        (async () => {
+            try {
+                setMatchups([]);
+              const games = await getGames();
+              await game(games);
+            } catch (err) {
+              console.log('Error occured when fetching games');
+            }
+          })();
     }, [])
-    // statsTest();
-    // console.log(formatDate(date, "yy-mm-dd"))
+
+    console.log(formatDate(date, "yy-mm-dd"))
 
 
 
   return (
     <SafeAreaView>
         <ScrollView>
-            <Text>{games}</Text>
+            {matchups.map((item, index) => (
+                 <Matchups item={item} />
+            ))}
             <Button icon="snail" mode="contained" onPress={() => navigation.navigate("Stat")} >
             Stats
             </Button>
