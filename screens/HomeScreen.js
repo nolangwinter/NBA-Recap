@@ -27,10 +27,9 @@ const HomeScreen = () => {
 
     const getGames = async () => {
         try {
-            const response = await fetch(`https://www.balldontlie.io/api/v1/games?start_date=${formatDate(date, "yy-mm-dd")}&end_date=2023-11-11`);
+            const response = await fetch(`https://www.balldontlie.io/api/v1/games?start_date=${formatDate(date, "yy-mm-dd")}&end_date=${formatDate(date, "yy-mm-dd")}`);
             const result = await response.json();
             return result;
-            game();
         } catch(error) {
             console.log("Error getting the games", error);
         }
@@ -76,16 +75,12 @@ const HomeScreen = () => {
           }
     }
 
-    const please = () => {
-        console.log("matchups", matchups);
-    }
-
 
     useEffect(() => {
 
         (async () => {
             try {
-                setMatchups([]);
+              setMatchups([]);
               const games = await getGames();
               await game(games);
             } catch (err) {
@@ -104,9 +99,6 @@ const HomeScreen = () => {
             {matchups.map((item, index) => (
                  <Matchups item={item} />
             ))}
-            <Button icon="snail" mode="contained" onPress={() => navigation.navigate("Stat")} >
-            Stats
-            </Button>
         </ScrollView>
     </SafeAreaView>
   ) 

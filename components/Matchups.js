@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native'
 
 const Matchups = (item) => {
     const navigation = useNavigation();
-    console.log("item", item.item.id)
   return (
     <Pressable style={{ flexDirection:"row", justifyContent:"space-between", margin: 10, borderWidth:2 }} onPress={() => navigation.navigate("Stat", {item: item.item.id})}>
         <View style={styles.gameScore}>
