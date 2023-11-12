@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     },
     vsTime: {
         margin: 3,
-        padding:10
+        padding:10,
+        alignItems:"center"
     }
 })

@@ -31,9 +31,9 @@ const StatScreen = ({ route }) => {
     const visitor_id = stats.data[0].game.visitor_team_id;
 
     for (let i = 0; i < stats.data.length; i++) {
-      if (stats.data[i].player.team_id === home_id) {
+      if (stats.data[i].player.team_id === home_id && stats.data[i].min !== '00') {
         setHome(home => [...home, stats.data[i]])
-      } else {
+      } else if (stats.data[i].player.team_id === visitor_id && stats.data[i].min !== '00'){
         setVisitor(visitor => [...visitor, stats.data[i]])
       }
     }
@@ -57,15 +57,8 @@ const StatScreen = ({ route }) => {
   }, [])
   return (
     <SafeAreaView>
-      <ScrollView>
 
-        {selectedButton === "Home" ? (home.map((item, index) => (
-          <Player item={item} key={index}/>
-        ))) : (visitor.map((item, index) => (
-          <Player item={item} key={index}/>
-        )))}
-
-        <View style={{ flexDirection:"row", alignItems:"center", gap:10, marginTop:12 }}>
+      <View style={{ flexDirection:"row", alignItems:"center", gap:10, marginTop:12 }}>
           <TouchableOpacity 
             onPress={() => handleButtonClick("Home")}
             style={[
@@ -116,8 +109,15 @@ const StatScreen = ({ route }) => {
 
         </View>
 
+      <ScrollView>
 
-        <Button icon="robot-angry-outline" mode="contained" onPress={() => navigation.goBack()} >
+        {selectedButton === "Home" ? (home.map((item, index) => (
+          <Player item={item} key={index}/>
+        ))) : (visitor.map((item, index) => (
+          <Player item={item} key={index}/>
+        )))}
+
+        <Button style={{ marginVertical:50, marginHorizontal:10 }} icon="robot-angry-outline" mode="contained" onPress={() => navigation.goBack()} >
           Games
         </Button>
       </ScrollView>
