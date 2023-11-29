@@ -25,6 +25,7 @@ const StatScreen = ({ route }) => {
     }
   }
 
+
   // seperated the players into the different teams
   const PlayersByTeam = (stats) => {
     const home_id = stats.data[0].game.home_team_id;
@@ -111,13 +112,17 @@ const StatScreen = ({ route }) => {
 
       <ScrollView>
 
+      {home.length === 0 ? (
+          <Text style={{ fontSize:30, alignItems:"center" }}>Game Has Not Started Yet :(</Text>
+        ): (null)}
+
         {selectedButton === "Home" ? (home.map((item, index) => (
           <Player item={item} key={index}/>
         ))) : (visitor.map((item, index) => (
           <Player item={item} key={index}/>
         )))}
 
-        <Button style={{ marginVertical:50, marginHorizontal:10 }} icon="robot-angry-outline" mode="contained" onPress={() => navigation.goBack()} >
+        <Button style={{ marginVertical:50, marginHorizontal:10, backgroundColor:"black" }} icon="robot-angry-outline" mode="contained" onPress={() => navigation.goBack()} >
           Games
         </Button>
       </ScrollView>

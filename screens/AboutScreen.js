@@ -10,7 +10,7 @@ const AboutScreen = () => {
       <View>
         <Text style={styles.text}>Beautifully Crafted By: Nolan Winter</Text>
         <Text style={styles.text}>Proposal Doc Link: https://docs.google.com/spreadsheets/d/1bR3uGsVsgWixhTOjY1I1EDi0D-B9QHblVRYR6Lue-rc/edit?usp=sharing</Text>
-        <Text style={styles.text}>Notes: I have it get the current date and then reformat it in order to pass it into the fetch url. However, I don't know when you'll look at it and currently if the game hasnt started there are no stats when you click a game which isn't cool. So I just hard coded a previous date for the check in</Text>
+        <Text style={styles.text}>Notes: Yes it is an expo app... I transfered it to a react native app but I didn't know how to generate an apk using react native. Also I was going to make the selfie app and then realized that I don't have a way to test if the camera actually works. So I added a button that shows the user their location. For the apple simulator it defaults to their headquarters.</Text>
       </View>
 
       <Button style={{ marginVertical:100, marginHorizontal:10 }} icon="clippy" mode="contained" onPress={() => navigation.goBack()} >

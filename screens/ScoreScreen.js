@@ -35,6 +35,7 @@ const ScoreScreen = () => {
         }
     } 
     
+    
     function formatDate(date, format) {
         const map = {
             mm: date.getMonth() + 1,
@@ -50,7 +51,7 @@ const ScoreScreen = () => {
 
         for (let i = 0; i < teams.data.length; i++) { 
             let matchup = teams.data[i]
-            console.log(`game ${i}`, matchup);
+            // console.log(`game ${i}`, matchup);
             setMatchups(matchups => 
                 [...matchups,
                     { 
@@ -100,7 +101,7 @@ const ScoreScreen = () => {
                  <Matchups item={item} />
             ))}
 
-            <Button style={{ marginVertical:50, marginHorizontal:10 }} icon="bathtub" mode="contained" onPress={() => navigation.goBack()} >
+            <Button style={{ marginVertical:50, marginHorizontal:10, backgroundColor:"black" }} icon="bathtub" mode="contained" onPress={() => navigation.goBack()} >
             Go Back
             </Button>
         </ScrollView>

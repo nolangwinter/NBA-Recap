@@ -15,11 +15,15 @@ const HomeScreen = () => {
           <MaterialCommunityIcons name="basketball" size={80} color="orange" />
         </View>
         <View style={{}}>
-          <Button style={{ marginTop:50, marginHorizontal:10}} icon="alien" mode="contained" onPress={() => navigation.navigate("Score")} >
+          <Button style={{ marginTop:50, marginHorizontal:10, backgroundColor:"black"}} mode="contained" onPress={() => navigation.navigate("Score")} >
             Scores
           </Button>
 
-          <Button style={{ marginTop:30, marginHorizontal:10 }} icon="arm-flex" mode="contained" onPress={() => navigation.navigate("About")} >
+          <Button style={{ marginTop:30, marginHorizontal:10, backgroundColor:"black"}} mode="contained" onPress={() => navigation.navigate("Location")} >
+            Where Am I?
+          </Button>
+
+          <Button style={{ marginTop:30, marginHorizontal:10, backgroundColor:"black" }} mode="contained" onPress={() => navigation.navigate("About")} >
             About
           </Button>
         </View>
